@@ -13,8 +13,8 @@ for method in requests_list:
 # Задание 2 если запрос не из списка:
 
 response_head = requests.head(URL)
-print(response_head.text)           #
-print(response_head.status_code)    # 400
+print(f"текст ответа - {response_head.text}, статус код -  {response_head.status_code}")
+
 
 # Задание 3 скрипт делает запрос с правильным значением method:
 
