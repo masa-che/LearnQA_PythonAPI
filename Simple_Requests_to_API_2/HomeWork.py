@@ -22,7 +22,7 @@ list_req_param = ["GET", "POST", "PUT", "DELETE"]
 for request_type in list_req_param:
     for parameter in list_req_param:
         if request_type == parameter:
-            response = requests.request(f"{request_type}", URL, params={"method": {parameter}})
+            response = requests.request(request_type, URL, params={"method": {parameter}})
             print(f"method-{request_type},params-{parameter},status code-{response.status_code},response server-{response.text}")
 # запрос GET с 'method': 'GET', имеет статус код 200 текст ответа {"success":"!"}
 # (и тд для всех типов запроса совпадающих со значением параметра)
