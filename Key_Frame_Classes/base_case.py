@@ -19,7 +19,7 @@ class BaseCase:
     def get_json_value(self, response: Response, name):
         try:                                              # проверяем что ответ пришёл в формате JSON
             response_as_dict = response.json()
-        except json.decoder.JSONDecoderError:             # если не в формате JSON тест упадёт и напишет текст ошибки из assert
+        except json.decoder.JSONDecodeError:              # если не в формате JSON тест упадёт и напишет текст ошибки из assert
             assert False, f"Response is not JSON format. Response text is  '{response.text}'"
                                                           # если try отработал - проверка нахождения name
         assert name in response_as_dict, f"Response JSON doesn't have key '{name}'"

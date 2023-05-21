@@ -2,6 +2,7 @@ import requests
 import pytest
 
 from Key_Frame_Classes.base_case import BaseCase
+from Key_Frame_Classes.assertions import Assertions
 
 
 class TestAuth(BaseCase):
@@ -25,14 +26,9 @@ class TestAuth(BaseCase):
 
     def test_auth_user(self):
         url = "https://playground.learnqa.ru/api/user/auth"
-        response0 = requests.get(url, headers={"x-csrf-token": self.token}, cookies={"auth_sid": self.auth_sid})
+        response2 = requests.get(url, headers={"x-csrf-token": self.token}, cookies={"auth_sid": self.auth_sid})
 
-        assert "user_id" in response0.json(), "user_id not found"
-
-        user_id_from_check_method = response0.json()["user_id"]
-        print(user_id_from_check_method)
-
-        assert self.user_id_from_auth_method == user_id_from_check_method, "user_id not equal"
+        Assertions.assert_json_value_by_name(response2, "user_id", self.user_id_from_auth_method, "User id auth method isn't equal to usrt id from check method")
 
     # негативная проверка на авторизацию
 
@@ -40,14 +36,9 @@ class TestAuth(BaseCase):
     def test_negative_auth_user(self, condition):          # в тесте будем вызывать переменную condition со значениями словаря exclude_params
         # далее идёт код со значениями из списка exclude_params, где мы передаём в запрос только параметр с куки или токеном
         if condition == "no_cookie":
-            response0 = requests.get("https://playground.learnqa.ru/api/user/auth",
+            response2 = requests.get("https://playground.learnqa.ru/api/user/auth",
                                      headers={"x-csrf-token": self.token})
         else:
-            response0 = requests.get("https://playground.learnqa.ru/api/user/auth", cookies={"auth_sid": self.auth_sid})
+            response2 = requests.get("https://playground.learnqa.ru/api/user/auth", cookies={"auth_sid": self.auth_sid})
 
-        assert "user_id" in response0.json(), "There no user id in the response"
-
-        user_id_from_check_method = response0.json()["user_id"]
-
-        assert user_id_from_check_method == 0, f"User is authorized with condition {condition}"
-
+        Assertions.assert_json_value_by_name(response2, "user_id", 0, f"User is authorized with condition {condition}")
