@@ -94,8 +94,9 @@ class TestUserAgent:
         actual_result = response.json()
         print(actual_result)
         assert actual_result['platform'] in user_agent_data['platform'],\
-            f"The '{actual_result['platform']}' does not match the expected result"
+            f"The '{actual_result['platform']}' doesn't match the expected result"
         assert actual_result['browser'] in user_agent_data['browser'],\
-            f"The '{actual_result['browser']}' does not match the expected result"
+            f"The '{actual_result['browser']}' doesn't match the expected result"
         assert actual_result['device'] in user_agent_data['device'],\
-            f"The '{actual_result['device']}' does not match the expected result"
+            f"The '{actual_result['device']}' doesn't match the expected result"
+
