@@ -18,3 +18,16 @@ class Assertions:
         assert name in response_as_dict, f"Response JSON doesn't have key '{name}'"  # проверка того что необходимое имя есть в ответе формата json
         assert response_as_dict[name] == expected_value, error_message               # сравнеие полученного результата имени с ожидвемым
 
+    @staticmethod
+    def assert_json_has_key(response: Response, name):  # метод проверки получения в json поля id нового пользователя
+        try:
+            response_as_dict = response.json()  # проверяем что ответ пришёл в формате JSON
+        except json.JSONDecodeError:            # если не в формате JSON выдаст ошибку и напишет текст ошибки из assert
+            assert False, f"Response is not JSON format. Response text is '{response.text}'"
+
+        assert name in response_as_dict, f"Response JSON doesn't have key '{name}'"  # проверка того что необходимое имя есть в ответе формата json
+
+    @staticmethod                                                                    # статик метод задание 4_2
+    def assert_status_code(response: Response, expected_status_code):
+        assert response.status_code == expected_status_code,\
+            f"Unexpected status code, expected: {expected_status_code}, actual: {response.status_code}"
